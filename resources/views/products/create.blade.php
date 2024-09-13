@@ -5,25 +5,24 @@
 
 <form action="{{ route('products.store') }}" method="POST">
     @csrf
-
     <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" class="form-control" required>
+        <label for="name">Product Name:</label>
+        <input type="text" name="name" id="name" class="form-control" required>
     </div>
 
     <div class="form-group">
-        <label for="sku">SKU</label>
-        <input type="text" id="sku" name="sku" class="form-control" required>
+        <label for="sku">SKU:</label>
+        <input type="text" name="sku" id="sku" class="form-control" required>
     </div>
 
     <div class="form-group">
-        <label for="quantity_in_stock">Quantity in Stock</label>
-        <input type="number" id="quantity_in_stock" name="quantity_in_stock" class="form-control" required>
+        <label for="quantity_in_stock">Quantity in Stock:</label>
+        <input type="number" name="quantity_in_stock" id="quantity_in_stock" class="form-control" required>
     </div>
 
     <div class="form-group">
-        <label for="supplier_id">Supplier</label>
-        <select id="supplier_id" name="supplier_id" class="form-control" required>
+        <label for="supplier_id">Supplier:</label>
+        <select name="supplier_id" id="supplier_id" class="form-control" required>
             @foreach($suppliers as $supplier)
                 <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
             @endforeach
@@ -32,6 +31,4 @@
 
     <button type="submit" class="btn btn-primary">Create Product</button>
 </form>
-
-<a href="{{ route('products.index') }}" class="btn btn-secondary">Back to Products</a>
 @endsection

@@ -14,8 +14,11 @@ class WarehouseController extends Controller
         return view('warehouses.index', compact('warehouses'));
 
     }
+    public function create()
+    {
+        return view('warehouses.create');
+    }
 
-    // Create a new warehouse
     public function store(Request $request)
     {
         $request->validate([
@@ -23,38 +26,48 @@ class WarehouseController extends Controller
             'location' => 'required|string|max:255',
         ]);
 
-        return Warehouse::create($request->all());
+        Warehouse::create($request->only(['name', 'location']));
+
+        return redirect()->route('warehouses.index')->with('success', 'Warehouse created successfully.');
     }
 
-    // Show a single warehouse
+    
     public function show($id)
     {
         return Warehouse::findOrFail($id);
     }
+    public function edit($id)
+    {
+        $warehouse = Warehouse::findOrFail($id);
+        return view('warehouses.edit', compact('warehouse'));
+    }
 
-    // Update warehouse details
+
     public function update(Request $request, $id)
     {
         $warehouse = Warehouse::findOrFail($id);
-
+    
         $request->validate([
             'name' => 'required|string|max:255',
             'location' => 'required|string|max:255',
         ]);
-
-        $warehouse->update($request->all());
-        return $warehouse;
+    
+        $warehouse->update($request->only(['name', 'location']));
+    
+        return redirect()->route('warehouses.index')->with('success', 'Warehouse updated successfully.');
     }
+    
 
     // Delete a warehouse
     public function destroy($id)
     {
         $warehouse = Warehouse::findOrFail($id);
         $warehouse->delete();
-
-        return response()->json(['message' => 'Warehouse deleted']);
+    
+        // Redirect to the warehouses index page with a success message
+        return redirect()->route('warehouses.index')->with('success', 'Warehouse deleted successfully.');
     }
-
+    
     public function transferStock(Request $request)
 {
     $request->validate([

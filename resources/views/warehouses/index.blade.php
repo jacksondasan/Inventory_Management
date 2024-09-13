@@ -2,6 +2,15 @@
 
 @section('content')
 <h2 id="warehouses">Warehouses</h2>
+
+<!-- Display success message if available -->
+@if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+
 <table class="table table-bordered">
     <thead class="thead-dark">
         <tr>

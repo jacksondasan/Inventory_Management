@@ -23,8 +23,14 @@ class ProductController extends Controller
         return view('products.edit', compact('product', 'suppliers'));
     }
 
+    public function create()
+    {
+        $suppliers = Supplier::all(); // Fetch all suppliers for the dropdown
+        return view('products.create', compact('suppliers'));
+    }
+
     public function store(Request $request)
-{
+    {
         $request->validate([
             'name' => 'required',
             'sku' => 'required|unique:products',
@@ -32,7 +38,9 @@ class ProductController extends Controller
             'supplier_id' => 'required|exists:suppliers,id',
         ]);
 
-        return Product::create($request->only(['name', 'sku', 'quantity_in_stock', 'supplier_id']));
+        Product::create($request->all());
+
+        return redirect()->route('products.index')->with('success', 'Product created successfully');
     }
     // Update product details
     public function update(Request $request, $id)
